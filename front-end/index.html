@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-store" />
+
+    <script type="text/javascript" src="elm.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="elm">
+    </div>
+  </body>
+
+  <footer>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var div = document.getElementById('elm');
+        var elm = Elm.embed(Elm.Main, div, {});
+
+        var dropdown = function() {
+          setTimeout(function() {
+            $(".dropdown-button").dropdown();
+          }, 50);
+        };
+
+        var setCharCounter = false;
+        var charcounter = function() {
+          if(setCharCounter === false) {
+            setTimeout(function() {
+              $('#newpost').characterCounter();
+            }, 50);
+            setCharCounter = true;
+          }
+        };
+
+        elm.ports.interop.subscribe(function(event) {
+          switch(event) {
+            case "DROPDOWN":
+              dropdown();
+              break;
+            case "CHARCOUNTER":
+              charcounter();
+              break;
+            default:
+              break;
+          }
+        });
+      })
+    </script>
+  </footer>
+</html>
